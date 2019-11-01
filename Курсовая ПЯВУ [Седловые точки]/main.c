@@ -1,6 +1,4 @@
 #include "Header.h"
-#define ROW_MAX 20
-#define COLUMN_MAX 20
 #include <locale.h>
 
 int main()
@@ -11,7 +9,6 @@ int main()
 	int row;
 	int column;
 	int** Arr;
-	//int Arr[ROW_MAX][COLUMN_MAX] = { 0 };
 	ReadMatrix("matrix.txt", &Arr, &row, &column);
 	SaddlePointSeek(Arr, &row, &column);
 
