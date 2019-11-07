@@ -7,7 +7,7 @@ int ReadMatrix(const char* inputFileName, int*** _Array, int* row_ptr, int* colu
 	inputFile = fopen(inputFileName, "rt");
 	int i, j;
 
-	
+
 
 	if (inputFile != NULL)
 	{
@@ -24,17 +24,17 @@ int ReadMatrix(const char* inputFileName, int*** _Array, int* row_ptr, int* colu
 			return -3;
 		}
 
-		
+
 
 
 
 		printf("%d  %d \n", *row_ptr, *column_ptr);
 
-		*_Array = malloc(sizeof(**_Array)*(*row_ptr));
+		*_Array = malloc((sizeof(int**)) * (*row_ptr));
 		int** Array = *_Array;
-		for (int i = 0; i < *row_ptr; i++) 
+		for (i = 0; i < *row_ptr; i++)
 		{
-			Array[i] = malloc(sizeof(int) * (*column_ptr));
+			Array[i] = malloc(sizeof(int*) * (*column_ptr));
 		}
 
 		for (i = 0; i < *row_ptr; i++)
@@ -46,14 +46,14 @@ int ReadMatrix(const char* inputFileName, int*** _Array, int* row_ptr, int* colu
 					printf("Ошибка чтения матрицы");
 					return -5;
 				}
-				
+
 
 			}
 		}
 
 		for (i = 0; i < *row_ptr; i++)
 		{
-			
+
 			for (j = 0; j < *column_ptr; j++)
 			{
 				printf("%d ", Array[i][j]);
@@ -70,7 +70,7 @@ int ReadMatrix(const char* inputFileName, int*** _Array, int* row_ptr, int* colu
 		perror("Ошибка чтения файла");
 	}
 
-	
+
 	return 0;
 }
 
@@ -78,8 +78,8 @@ int MinMaxRows(int** Array, int* row_ptr, int* column_ptr)
 {
 	int min;
 	int max;
-	int* arr_max_row = malloc(sizeof(int) * (*row_ptr));
-	int* arr_min_row = malloc(sizeof(int) * (*column_ptr));
+	int* arr_max_row = (int*)malloc(sizeof(int*) * (*row_ptr));
+	int* arr_min_row = (int*)malloc(sizeof(int*) * (*column_ptr));
 	int i;
 	int j;
 	for (i = 0; i < *row_ptr; i++)
@@ -111,45 +111,45 @@ int MinMaxRows(int** Array, int* row_ptr, int* column_ptr)
 
 int SaddlePointSeek(int** Array, int* row_ptr, int* column_ptr)
 {
-	
+
 	printf("\n\n\n\n\n\n");
-	
-	
-	
+
+
+
 	int i;
 	int j;
 
-	/*for (i = 0; i < *row_ptr; i++) 
+	/*for (i = 0; i < *row_ptr; i++)
 	{
 		j = 0;
 		min = Array[i][j];
 		max = Array[i][j];
-		
-		for (j = 0; j <*column_ptr; j++) // поиск максимумов и минимумов в строках 
+
+		for (j = 0; j <*column_ptr; j++) // поиск максимумов и минимумов в строках
 		{
 			if (Array[i][j] >= max) // если тек. элемент больше макс
 			{
 				max = Array[i][j];
 				arr_max_row[i] = Array[i][j];
 			}
-			if (Array[i][j] <= min) // текущий элемент меньше мин? 
+			if (Array[i][j] <= min) // текущий элемент меньше мин?
 			{
 				min = Array[i][j];
 				arr_min_row[i] = Array[i][j];
 			}
-			
+
 
 
 		}
-		
+
 	}
 
 	*/
 
-	
+	/*
 
 		printf("\n");
-		for (i = 0; i < *row_ptr; i++) 
+		for (i = 0; i < *row_ptr; i++)
 		{
 			printf("%d  ", arr_max_row[i]);
 		}
@@ -158,7 +158,7 @@ int SaddlePointSeek(int** Array, int* row_ptr, int* column_ptr)
 		{
 			printf("%d  ", arr_min_row[i]);
 		}
-	
-	
+
+	*/
 	return 0;
 }
