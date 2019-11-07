@@ -68,6 +68,7 @@ int ReadMatrix(const char* inputFileName, int*** _Array, int* row_ptr, int* colu
 	else
 	{
 		perror("Ошибка чтения файла");
+		return -6;
 	}
 
 	
@@ -151,6 +152,9 @@ int SaddlePointSeek(int** Array, int* row_ptr, int* column_ptr) // поиск седловы
 {
 
 	printf("\n\n\n\n\n\n");
+	int i;
+	int j;
+	int counter;
 
 	int* MaxRowArr = (int*)malloc(sizeof(int*) * (*row_ptr));
 	int* MinRowArr = (int*)malloc(sizeof(int*) * (*row_ptr));
@@ -159,53 +163,46 @@ int SaddlePointSeek(int** Array, int* row_ptr, int* column_ptr) // поиск седловы
 	int* MinColumnArr = (int*)malloc(sizeof(int*) * (*column_ptr));
 
 	MinMaxRows(Array, row_ptr, column_ptr, MaxRowArr, MinRowArr);
-	MinMaxColumns(Array, row_ptr, column_ptr, MaxRowArr, MinRowArr);
+	MinMaxColumns(Array, row_ptr, column_ptr, MaxColumnArr, MinColumnArr);
 
-	for (int i = 0; i < *row_ptr; i++) 
+	/*for (i = 0; i < *row_ptr; i++) 
 	{
-		printf("%d\t", MaxRowArr[i]);
+		printf("%d  ", MaxRowArr[i]);
+		
 	}
-
-	/*for (i = 0; i < *row_ptr; i++)
+	printf("\n");
+	for (i = 0; i < *row_ptr; i++)
 	{
-		j = 0;
-		min = Array[i][j];
-		max = Array[i][j];
-
-		for (j = 0; j <*column_ptr; j++) // поиск максимумов и минимумов в строках
-		{
-			if (Array[i][j] >= max) // если тек. элемент больше макс
-			{
-				max = Array[i][j];
-				MaxRowArr[i] = Array[i][j];
-			}
-			if (Array[i][j] <= min) // текущий элемент меньше мин?
-			{
-				min = Array[i][j];
-				MinRowArr[i] = Array[i][j];
-			}
-
-
-
-		}
+		printf("%d  ", MinRowArr[i]);
 
 	}
+	printf("\n");
+	for (j = 0; j < *column_ptr; j++)
+	{
+		printf("%d  ", MaxColumnArr[j]);
 
-	*/
+	}
+	printf("\n");
+	for (j = 0; j < *column_ptr; j++)
+	{
+		printf("%d  ", MinColumnArr[j]);
 
-	/*
-
-		printf("\n");
-		for (i = 0; i < *row_ptr; i++)
+	}*/
+	for (i = 0; i < *row_ptr; i++) 
+	{
+		for (j = 0;  j < *column_ptr; j++)
 		{
-			printf("%d  ", MaxRowArr[i]);
-		}
-		printf("\n\n\n\n");
-		for (i = 0; i < *row_ptr; i++)
-		{
-			printf("%d  ", MinRowArr[i]);
-		}
 
-	*/
+
+			if (MaxRowArr[i] == MinColumnArr[j])
+			{
+				printf("Седловая точка: [%d] [%d] %d\n", i, j, MaxRowArr[i]);
+			}
+			if (MinRowArr[i] == MaxColumnArr[j])
+			{
+				printf("Седловая точка: [%d] [%d] %d\n", i, j, MinRowArr[i]);
+			}
+		}
+	}
 	return 0;
 }
