@@ -10,7 +10,7 @@ int main()
 	int column;
 	int** Arr;
 	ReadMatrix("matrix.txt", &Arr, &row, &column);
-	SaddlePointSeek(Arr, &row, &column);
+	SaddlePointSeek(Arr, row, column);
 
 	return 0;
 }

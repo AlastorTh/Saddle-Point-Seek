@@ -5,6 +5,7 @@ int ReadMatrix(const char* inputFileName, int*** _Array, int* row_ptr, int* colu
 	FILE* inputFile;
 	inputFile = fopen(inputFileName, "rt");
 	int i, j;
+	int check;
 
 
 
@@ -14,30 +15,41 @@ int ReadMatrix(const char* inputFileName, int*** _Array, int* row_ptr, int* colu
 		return -1;
 	}
 
-	if (fscanf(inputFile, "%d", row_ptr) != 1)
+	check = fscanf(inputFile, "%d", row_ptr);
+	if (check==0)
 	{
-		printf("Ошибка считывания кол-ва строк");
-		return -2;
+		printf("Ошибка считывания кол-ва строк\n");
+		exit(-1);
 	}
-	
-
-	if (fscanf(inputFile, "%d", column_ptr) != 1)
+	if (check == EOF) 
 	{
-		printf("Ошибка считывания кол-ва столбцов");
-		return -3;
+		printf("Обнаружен конец файла\n");
+		exit(-2);
+	}
+
+
+	check = fscanf(inputFile, "%d", column_ptr);
+	if (check == 0)
+	{
+		printf("Ошибка считывания кол-ва строк\n");
+		exit(-3);
+	}
+
+	if (check == EOF)
+	{
+		printf("Обнаружен конец файла\n");
+		exit(-4);
 	}
 
 
 
-
-
-	printf("Число строк: %d\nЧисло столбцов: %d \n", *row_ptr, *column_ptr);
+	printf("Число строк: %d\nЧисло столбцов: %d \n\n", *row_ptr, *column_ptr);
 
 	*_Array = malloc((sizeof(int**)) * (*row_ptr));
 	if (*_Array == NULL)
 	{
-		printf("Ошибка выделения динамической памяти!");
-		return -20;
+		printf("Ошибка выделения динамической памяти!\n");
+		exit(-5);
 	}
 	int** Array = *_Array;
 	for (i = 0; i < *row_ptr; ++i)
@@ -45,8 +57,8 @@ int ReadMatrix(const char* inputFileName, int*** _Array, int* row_ptr, int* colu
 		Array[i] = malloc(sizeof(int*) * (*column_ptr));
 		if (Array[i] == NULL)
 		{
-			printf("Ошибка выделения динамической памяти!");
-			return -44;
+			printf("Ошибка выделения динамической памяти!\n");
+			exit(-6);
 		}
 	}
 
@@ -54,12 +66,18 @@ int ReadMatrix(const char* inputFileName, int*** _Array, int* row_ptr, int* colu
 	{
 		for (j = 0; j < *column_ptr; ++j)
 		{
-			if (fscanf(inputFile, "%d", &Array[i][j]) != 1)
+			check = fscanf(inputFile, "%d", &Array[i][j]);
+			if (check == 0)
 			{
 				printf("Ошибка чтения матрицы");
-				return -5;
+				exit(-7);
 			}
 
+			if (check == EOF)
+			{
+				printf("в процессе считывания элементов преждевременно обнаружен конец файла\n");
+				exit(-8);
+			}
 
 		}
 	}
