@@ -11,34 +11,29 @@ int ReadMatrix(const char* inputFileName, int*** _Array, int* row_ptr, int* colu
 
 	if (inputFile == NULL)
 	{
-		printf("Ошибка открытия файла\n");
 		return -1;
 	}
 
 	check = fscanf(inputFile, "%d", row_ptr);
 	if (check==0)
 	{
-		printf("Ошибка считывания кол-ва строк\n");
-		exit(-1);
+		return -2;
 	}
 	if (check == EOF) 
 	{
-		printf("Обнаружен конец файла\n");
-		exit(-2);
+		return -3;
 	}
 
 
 	check = fscanf(inputFile, "%d", column_ptr);
 	if (check == 0)
 	{
-		printf("Ошибка считывания кол-ва строк\n");
-		exit(-3);
+		return -4;
 	}
 
 	if (check == EOF)
 	{
-		printf("Обнаружен конец файла\n");
-		exit(-4);
+		return -5;
 	}
 
 
@@ -48,8 +43,7 @@ int ReadMatrix(const char* inputFileName, int*** _Array, int* row_ptr, int* colu
 	*_Array = malloc((sizeof(int**)) * (*row_ptr));
 	if (*_Array == NULL)
 	{
-		printf("Ошибка выделения динамической памяти!\n");
-		exit(-5);
+		return -6;
 	}
 	int** Array = *_Array;
 	for (i = 0; i < *row_ptr; ++i)
@@ -57,8 +51,7 @@ int ReadMatrix(const char* inputFileName, int*** _Array, int* row_ptr, int* colu
 		Array[i] = malloc(sizeof(int*) * (*column_ptr));
 		if (Array[i] == NULL)
 		{
-			printf("Ошибка выделения динамической памяти!\n");
-			exit(-6);
+			return -7;
 		}
 	}
 
@@ -69,14 +62,12 @@ int ReadMatrix(const char* inputFileName, int*** _Array, int* row_ptr, int* colu
 			check = fscanf(inputFile, "%d", &Array[i][j]);
 			if (check == 0)
 			{
-				printf("Ошибка чтения матрицы");
-				exit(-7);
+				return -8;
 			}
 
 			if (check == EOF)
 			{
-				printf("в процессе считывания элементов преждевременно обнаружен конец файла\n");
-				exit(-8);
+				return -9;
 			}
 
 		}
@@ -107,7 +98,7 @@ int ReadMatrix(const char* inputFileName, int*** _Array, int* row_ptr, int* colu
 int SaddlePointSeek(int** Array, int row_ptr, int column_ptr) // поиск седловых точек
 {
 
-	printf("\n\n\n\n\n\n");
+	printf("\n\n\n\n");
 	int i;
 	int j;
 	int counter;
